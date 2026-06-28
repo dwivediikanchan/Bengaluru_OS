@@ -1,53 +1,45 @@
 import streamlit as st
-import requests
 import pandas as pd
+
+
+from dashboard.utils.api import get_data
+
+
 
 
 
 st.title(
+
     "💼 Bengaluru Jobs Intelligence"
-)
-
-
-
-API_URL = (
-
-    "http://127.0.0.1:8000/api/jobs"
 
 )
+
+
 
 
 
 try:
 
 
-    response = requests.get(
 
-        API_URL
+    # Load directly from database
+
+    df = get_data(
+
+        "jobs"
 
     )
 
 
 
-    if response.status_code == 200:
-
-
-
-        data = response.json()
-
-
-
-        df = pd.DataFrame(
-
-            data
-
-        )
+    if not df.empty:
 
 
 
         st.subheader(
 
             "Jobs Data"
+
         )
 
 
@@ -62,8 +54,9 @@ try:
 
 
 
-        # Insights
 
+
+        # Salary Insights
 
 
         if "salary" in df.columns:
@@ -73,6 +66,7 @@ try:
             st.subheader(
 
                 "Salary Insights"
+
             )
 
 
@@ -82,8 +76,14 @@ try:
                 "Average Salary",
 
                 f"₹ {round(df['salary'].mean())}"
+
             )
 
+
+
+
+
+        # Companies
 
 
         if "company" in df.columns:
@@ -93,16 +93,26 @@ try:
             st.subheader(
 
                 "Top Companies"
+
             )
 
 
 
             st.bar_chart(
 
-                df["company"].value_counts().head(10)
+                df["company"]
+
+                .value_counts()
+
+                .head(10)
 
             )
 
+
+
+
+
+        # Locations
 
 
         if "location" in df.columns:
@@ -112,25 +122,35 @@ try:
             st.subheader(
 
                 "Job Locations"
+
             )
 
 
 
             st.bar_chart(
 
-                df["location"].value_counts().head(10)
+                df["location"]
+
+                .value_counts()
+
+                .head(10)
 
             )
+
+
 
 
 
     else:
 
 
-        st.error(
+        st.warning(
 
-            "Jobs API Error"
+            "No jobs data available"
+
         )
+
+
 
 
 
@@ -139,5 +159,6 @@ except Exception as e:
 
     st.error(
 
-        f"API not reachable: {e}"
+        f"Error loading jobs data: {e}"
+
     )
