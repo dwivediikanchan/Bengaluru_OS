@@ -10,6 +10,7 @@ joblib
 langchain
 langchain-core
 langchain-community
+langchain-ollama
 
 pypdf
 python-dotenv
