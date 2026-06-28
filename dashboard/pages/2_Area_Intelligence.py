@@ -2,7 +2,6 @@ import sys
 import os
 
 
-
 sys.path.insert(
 
     0,
@@ -24,12 +23,14 @@ sys.path.insert(
 
 
 import streamlit as st
-import requests
 import pandas as pd
 
 
 
+from dashboard.utils.api import get_data
+
 from visualizations.area_charts import show_area_chart
+
 
 
 
@@ -42,38 +43,22 @@ st.title(
 
 
 
-API_URL = (
-
-    "http://127.0.0.1:8000/api/area-intelligence"
-
-)
-
 
 
 try:
 
 
-    response = requests.get(
+    # Load directly from database
 
-        API_URL
+    df = get_data(
+
+        "area_score"
 
     )
 
 
 
-    data = response.json()
-
-
-
-    if data:
-
-
-
-        df = pd.DataFrame(
-
-            data
-
-        )
+    if not df.empty:
 
 
 
@@ -97,7 +82,11 @@ try:
 
         show_area_chart(
 
-            data
+            df.to_dict(
+
+                orient="records"
+
+            )
 
         )
 
@@ -114,7 +103,13 @@ try:
 
 
 
+
+
 except Exception as e:
 
 
-    st.error(e)
+    st.error(
+
+        f"Error loading area intelligence: {e}"
+
+    )

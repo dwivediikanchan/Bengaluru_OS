@@ -1,19 +1,18 @@
-import requests
+from database.connection import get_connection
 
 
+def get_data(table):
 
-BASE_URL = "http://127.0.0.1:8000/api"
+    conn = get_connection()
 
+    df = conn.execute(
 
+        f"SELECT * FROM {table}"
 
-def get_api(endpoint):
-
-
-    response = requests.get(
-
-        f"{BASE_URL}/{endpoint}"
-
-    )
+    ).fetchdf()
 
 
-    return response.json()
+    conn.close()
+
+
+    return df
