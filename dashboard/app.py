@@ -47,12 +47,12 @@ pages = {
         ),
 
         st.Page(
-            "pages/Rent_Prediction.py",
+            "pages/5_Rent_Prediction.py",
             title="Rent Prediction"
         ),
 
         st.Page(
-            "pages/Recommendation.py",
+            "pages/6_Recommendation.py",
             title="Recommendation"
         )
 
@@ -64,27 +64,27 @@ pages = {
     "🚦 City Intelligence": [
 
         st.Page(
-            "pages/5_Traffic.py",
+            "pages/7_Traffic.py",
             title="Traffic"
         ),
 
         st.Page(
-            "pages/6_Weather.py",
+            "pages/8_Weather.py",
             title="Weather"
         ),
 
         st.Page(
-            "pages/7_Civic.py",
+            "pages/9_Civic.py",
             title="Civic"
         ),
 
         st.Page(
-            "pages/Metro.py",
+            "pages/10_Metro.py",
             title="Metro"
         ),
 
         st.Page(
-            "pages/13_City_Chat.py",
+            "pages/11_City_Chat.py",
             title="City Chat"
         )
 
@@ -96,7 +96,7 @@ pages = {
     "💼 Career": [
 
         st.Page(
-            "pages/8_Career.py",
+            "pages/12_Career.py",
             title="Career"
         )
 
@@ -108,7 +108,7 @@ pages = {
     "📈 Future Intelligence": [
 
     st.Page(
-        "pages/9_Future_Trends.py",
+        "pages/13_Future_Trends.py",
         title="📊 Future Trends"
     ),
 
@@ -125,7 +125,7 @@ pages = {
     "🎉 Events": [
 
         st.Page(
-            "pages/10_Events.py",
+            "pages/15_Events.py",
             title="Events"
         )
 
@@ -137,12 +137,12 @@ pages = {
     "🤖 AI": [
 
         st.Page(
-            "pages/11_AI_Assistant.py",
+            "pages/16_AI_Assistant.py",
             title="AI Assistant"
         ),
 
         st.Page(
-            "pages/12_Smart_Recommendation.py",
+            "pages/17_Smart_Recommendation.py",
             title="Smart Recommendation"
         )
 
