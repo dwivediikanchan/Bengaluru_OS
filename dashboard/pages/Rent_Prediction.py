@@ -1,19 +1,52 @@
 import streamlit as st
-import requests
+import joblib
+import os
+import numpy as np
+
 
 
 
 st.title(
+
     "🏠 AI Rent Prediction"
+
+)
+
+
+
+
+
+# Load model
+
+MODEL_PATH = os.path.join(
+
+    "ml_models",
+
+    "rent_prediction",
+
+    "model.pkl"
+
 )
 
 
 
-API_URL = (
 
-"http://127.0.0.1:8000/api/predict-rent"
+@st.cache_resource
+def load_model():
 
-)
+
+    return joblib.load(
+
+        MODEL_PATH
+
+    )
+
+
+
+
+model = load_model()
+
+
 
 
 
@@ -102,62 +135,46 @@ area_score = st.slider(
 
 
 
+
 if st.button(
+
     "Predict Rent"
+
 ):
 
 
-    payload = {
+    input_data = np.array(
 
+        [[
 
-        "rent_score": rent_score,
+        rent_score,
 
+        traffic_score,
 
-        "traffic_score": traffic_score,
+        metro_score,
 
+        weather_score,
 
-        "metro_score": metro_score,
+        civic_score,
 
+        area_score
 
-        "weather_score": weather_score,
+        ]]
 
-
-        "civic_score": civic_score,
-
-
-        "area_score": area_score
-
-
-    }
+    )
 
 
 
-    try:
+    prediction = model.predict(
 
+        input_data
 
-        response = requests.post(
-
-            API_URL,
-
-            json=payload
-
-        )
+    )[0]
 
 
 
-        result = response.json()
+    st.success(
 
+        f"Predicted Rent: ₹ {round(prediction)}"
 
-
-        st.success(
-
-            f"Predicted Rent: ₹ {result['predicted_rent']}"
-
-        )
-
-
-
-    except Exception as e:
-
-
-        st.error(e)
+    )
