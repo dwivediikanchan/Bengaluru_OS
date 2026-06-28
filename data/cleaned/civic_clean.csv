@@ -1,0 +1,13 @@
+area,complaint_type,complaint_count,status
+whitefield,Garbage,40,open
+whitefield,Road,30,open
+whitefield,Water,20,closed
+hsr layout,Garbage,15,closed
+hsr layout,Road,10,closed
+hsr layout,Water,8,closed
+electronic city,Garbage,25,open
+electronic city,Road,20,open
+electronic city,Water,15,open
+koramangala,Garbage,10,closed
+koramangala,Road,8,closed
+koramangala,Water,5,closed

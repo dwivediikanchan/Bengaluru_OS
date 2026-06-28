@@ -1,0 +1,6 @@
+area,nearest_station,distance_km,connectivity_score
+Whitefield,Whitefield Metro,1.5,8
+HSR Layout,HSR Metro,3.0,7
+Electronic City,Electronic City Metro,2.0,8
+Koramangala,Indiranagar Metro,4.0,6
+Marathahalli,Baiyappanahalli Metro,5.0,5

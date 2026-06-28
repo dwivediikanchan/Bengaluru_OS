@@ -1,0 +1,11 @@
+area,time_slot,avg_speed,traffic_level
+Whitefield,8AM,18,High
+Whitefield,6PM,15,High
+HSR Layout,8AM,25,Medium
+HSR Layout,6PM,22,Medium
+Electronic City,8AM,20,Medium
+Electronic City,6PM,12,High
+Koramangala,8AM,28,Low
+Koramangala,6PM,24,Medium
+Marathahalli,8AM,14,High
+Marathahalli,6PM,10,High
