@@ -1,52 +1,55 @@
 import streamlit as st
 
-from langchain_ollama import OllamaLLM
-
-
-
-print("🔥 FAST CHATBOT LOADED")
+from groq import Groq
 
 
 
 @st.cache_resource
-def get_model():
+def get_client():
 
+    return Groq(
 
-    return OllamaLLM(
-
-        model="llama3.2:3b",
-
-        temperature=0.2,
-
-        num_predict=120
+        api_key=st.secrets["GROQ_API_KEY"]
 
     )
 
 
 
-llm = get_model()
+client = get_client()
 
 
 
 def ask_city_ai(question):
 
 
-    prompt = f"""
+    response = client.chat.completions.create(
 
-You are Bengaluru OS AI Assistant.
+        model="llama-3.1-8b-instant",
 
-Answer about Bengaluru.
+        messages=[
 
-Keep answer short and useful.
+            {
 
-User question:
+                "role":"system",
 
-{question}
+                "content":
+                "You are Bengaluru OS AI Assistant. Give short practical answers about Bengaluru."
 
-"""
+            },
+
+            {
+
+                "role":"user",
+
+                "content":question
+
+            }
+
+        ],
+
+        temperature=0.3
+
+    )
 
 
-    answer = llm.invoke(prompt)
-
-
-    return answer
+    return response.choices[0].message.content
