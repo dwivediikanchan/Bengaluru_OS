@@ -1,50 +1,47 @@
 import streamlit as st
-import requests
 import pandas as pd
+
+
+from dashboard.utils.api import get_data
+
+
 
 
 
 st.title(
+
     "🏠 Bengaluru Housing Intelligence"
-)
-
-
-
-API_URL = (
-
-    "http://127.0.0.1:8000/api/housing"
 
 )
+
+
 
 
 
 try:
 
 
-    response = requests.get(
 
-        API_URL
+    # Load directly from database
+
+    df = get_data(
+
+        "housing"
 
     )
 
 
-    if response.status_code == 200:
 
-
-        data = response.json()
-
-
-        df = pd.DataFrame(
-
-            data
-
-        )
+    if not df.empty:
 
 
 
         st.subheader(
+
             "Housing Data"
+
         )
+
 
 
         st.dataframe(
@@ -57,7 +54,9 @@ try:
 
 
 
+
         if "rent" in df.columns:
+
 
 
             st.subheader(
@@ -67,7 +66,9 @@ try:
             )
 
 
+
             avg_rent = df["rent"].mean()
+
 
 
             st.metric(
@@ -80,14 +81,17 @@ try:
 
 
 
+
     else:
 
 
-        st.error(
+        st.warning(
 
-            "Housing API Error"
+            "No housing data available"
 
         )
+
+
 
 
 
@@ -96,6 +100,6 @@ except Exception as e:
 
     st.error(
 
-        f"API not reachable: {e}"
+        f"Error loading housing data: {e}"
 
     )
