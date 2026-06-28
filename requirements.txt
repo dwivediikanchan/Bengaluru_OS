@@ -13,3 +13,6 @@ langchain-community
 
 pypdf
 python-dotenv
+
+folium
+streamlit-folium
