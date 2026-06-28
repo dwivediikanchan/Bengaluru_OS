@@ -1,11 +1,94 @@
 import streamlit as st
-import requests
+
+
+from ai_engine.decision_engine import BengaluruDecisionEngine
+
+from database.connection import get_connection
+
+import pandas as pd
+
+
 
 
 
 st.title(
+
     "🏙 Bengaluru Area Recommendation"
+
 )
+
+
+
+
+
+@st.cache_data
+def load_data():
+
+    conn = get_connection()
+
+
+    housing = conn.execute(
+        "SELECT * FROM housing"
+    ).fetchdf()
+
+
+    metro = conn.execute(
+        "SELECT * FROM metro"
+    ).fetchdf()
+
+
+    traffic = conn.execute(
+        "SELECT * FROM traffic"
+    ).fetchdf()
+
+
+    weather = conn.execute(
+        "SELECT * FROM weather"
+    ).fetchdf()
+
+
+    jobs = conn.execute(
+        "SELECT * FROM jobs"
+    ).fetchdf()
+
+
+    civic = conn.execute(
+        "SELECT * FROM civic"
+    ).fetchdf()
+
+
+    conn.close()
+
+
+    return housing, metro, traffic, weather, jobs, civic
+
+
+
+
+
+housing, metro, traffic, weather, jobs, civic = load_data()
+
+
+
+
+
+engine = BengaluruDecisionEngine(
+
+    housing,
+
+    metro,
+
+    traffic,
+
+    weather,
+
+    jobs,
+
+    civic
+
+)
+
+
 
 
 
@@ -18,6 +101,7 @@ salary = st.number_input(
     value=60000
 
 )
+
 
 
 
@@ -35,47 +119,36 @@ rent_percentage = st.slider(
 
 
 
+
+
 if st.button("Recommend"):
 
 
-    payload = {
 
-        "salary": salary,
+    result = engine.recommend_area(
 
-        "rent_percentage": rent_percentage
+        "Best area to live",
 
-    }
+        [
 
+            "Low Rent",
 
+            "Metro"
 
-    response = requests.post(
-
-        "http://127.0.0.1:8000/api/recommend",
-
-        json=payload
+        ]
 
     )
 
 
 
-    if response.status_code == 200:
-
-
-        data = response.json()
+    df = pd.DataFrame(result)
 
 
 
-        st.dataframe(
+    st.dataframe(
 
-            data,
+        df,
 
-            use_container_width=True
+        use_container_width=True
 
-        )
-
-
-    else:
-
-        st.error(
-            "API Error"
-        )
+    )
